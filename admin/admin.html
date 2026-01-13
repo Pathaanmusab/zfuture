@@ -1,38 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Zfuture Admin</title>
+<title>Admin</title>
 <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<h1>Zfuture – Admin Panel</h1>
+<h2>Slider</h2>
+<input id="sImg" placeholder="Image URL">
+<input id="sText" placeholder="Button Text">
+<input id="sLink" placeholder="Button Link">
+<button onclick="addSlider()">Add Slider</button>
 
-<!-- CATEGORY -->
-<section>
-  <h2>Add Category</h2>
-  <input type="text" id="catName" placeholder="Category name">
-  <button onclick="addCategory()">Add Category</button>
-  <ul id="catList"></ul>
-</section>
+<h2>Category</h2>
+<input id="catName" placeholder="Category Name">
+<button onclick="addCategory()">Add</button>
 
-<hr>
-
-<!-- PRODUCT -->
-<section>
-  <h2>Add Product</h2>
-
-  <input type="text" id="pName" placeholder="Product name">
-  <input type="number" id="pPrice" placeholder="Price ₹">
-  <input type="number" id="pOffer" placeholder="Offer %">
-  
-  <select id="pCategory"></select>
-
-  <input type="text" id="pImage" placeholder="Image URL">
-
-  <button onclick="addProduct()">Save Product</button>
-</section>
+<h2>Product</h2>
+<input id="pName" placeholder="Product Name">
+<input id="pPrice" placeholder="Price">
+<input id="pOffer" placeholder="Offer %">
+<select id="pCat"></select>
+<input id="pImg" placeholder="Image URL">
+<button onclick="addProduct()">Save</button>
 
 <script src="admin.js"></script>
 </body>
