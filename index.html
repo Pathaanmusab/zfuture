@@ -2,51 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Zfuture</title>
+  <title>Zfuture | Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- MAIN CSS -->
   <link rel="stylesheet" href="css/theme.css">
 </head>
+
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo">Z<span>future</span></div>
-  <div class="header-icons">
-    🔍 ☰
-  </div>
-</div>
+<!-- ================= HEADER ================= -->
+<header style="padding:14px;font-size:22px;font-weight:bold;">
+  Zfuture
+</header>
 
-<!-- CATEGORY -->
-<div class="section-title">CATEGORIES</div>
+<!-- ================= CATEGORIES ================= -->
+<h3 style="padding:0 16px;">Categories</h3>
+<div class="category-wrapper" id="categoryWrapper"></div>
 
-<div class="category-wrapper" id="categoryWrapper">
-  <!-- categories auto load here -->
-</div>
+<!-- ================= SLIDER ================= -->
+<div class="slider" id="sliderBox"></div>
 
-<div class="safe"></div>
+<!-- ================= PRODUCTS ================= -->
+<h3 style="padding:0 16px;">Sale Is Live</h3>
+<div class="products" id="productBox"></div>
 
+<!-- ================= JS ================= -->
 <script>
-/* LOAD CATEGORIES FROM ADMIN */
+/* LOAD CATEGORIES */
 let categories = JSON.parse(localStorage.getItem("categories")) || [];
-const box = document.getElementById("categoryWrapper");
+const catBox = document.getElementById("categoryWrapper");
 
-if(categories.length === 0){
-  box.innerHTML = "<p style='padding:10px'>No category added</p>";
-}
-
-categories.forEach(cat => {
-  box.innerHTML += `
-    <div class="category-item" onclick="openCategory('${cat}')">
+categories.forEach(cat=>{
+  catBox.innerHTML += `
+    <div class="category-item" onclick="openCat('${cat}')">
       <div class="category-circle">${cat}</div>
       <p>${cat}</p>
     </div>
   `;
 });
 
-function openCategory(cat){
-  window.location.href = "product.html?category=" + encodeURIComponent(cat);
+function openCat(cat){
+  window.location.href = "index.html?category="+encodeURIComponent(cat);
 }
 </script>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>
