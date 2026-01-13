@@ -1,77 +1,91 @@
-*{box-sizing:border-box;font-family:Arial}
-body{margin:0;background:#f6f6f6}
+body{
+  margin:0;
+  font-family:Arial;
+  background:#fafafa;
+}
 
-/* HEADER */
-.topbar{
-  background:#fff;
-  padding:14px;
+.top{
+  padding:15px;
   font-size:22px;
   font-weight:bold;
-  border-bottom:1px solid #ddd;
 }
 
-/* SECTION */
-.section{padding:12px}
+.title{
+  padding:10px;
+}
 
-/* CATEGORY */
-.category-wrapper{
+.slider{
   display:flex;
-  gap:12px;
   overflow-x:auto;
 }
-.category-item{text-align:center;min-width:90px}
-.category-circle{
-  width:70px;height:70px;
+
+.slide{
+  min-width:90%;
+  margin:10px;
+  position:relative;
+}
+
+.slide img{
+  width:100%;
+  border-radius:10px;
+}
+
+.slide button{
+  position:absolute;
+  bottom:15px;
+  left:15px;
+  padding:10px 15px;
+  border:none;
+  background:black;
+  color:white;
+}
+
+.categories{
+  display:flex;
+  overflow-x:auto;
+  padding:10px;
+}
+
+.category{
+  text-align:center;
+  margin-right:15px;
+}
+
+.circle{
+  width:70px;
+  height:70px;
   border-radius:50%;
-  background:#111;
-  color:#fff;
+  background:black;
+  color:white;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:12px;
   font-weight:bold;
 }
-.category-item p{margin:6px 0;font-size:13px}
 
-/* SLIDER */
-.slider{
-  margin:12px;
-  border-radius:12px;
-  overflow:hidden;
-}
-.slide{
-  background:#000;
-  color:#fff;
-  padding:20px;
-  margin-bottom:8px;
-  border-radius:12px;
-}
-
-/* PRODUCTS */
 .products{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-.product{
-  background:#fff;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
   padding:10px;
-  border-radius:10px;
 }
-.product img{
-  width:100%;
+
+.card{
+  background:white;
+  padding:8px;
   border-radius:8px;
 }
-.old-price{
-  text-decoration:line-through;
-  color:#888;
-  font-size:13px;
+
+.card img{
+  width:100%;
 }
-.new-price{
+
+.price{
   font-weight:bold;
-  color:#000;
 }
-.offer{
-  color:green;
-  font-size:13px;
+
+.old{
+  text-decoration:line-through;
+  color:gray;
+  font-size:14px;
 }
