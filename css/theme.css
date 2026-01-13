@@ -1,1 +1,88 @@
 
+/* ===== ZFUTURE THEME (STEP 2) ===== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  color: #111;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.logo span {
+  color: #e10600; /* red */
+}
+
+.header-icons {
+  display: flex;
+  gap: 14px;
+  font-size: 20px;
+}
+
+/* ===== CATEGORY SECTION ===== */
+.section-title {
+  padding: 14px 16px 6px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.category-wrapper {
+  display: flex;
+  gap: 14px;
+  padding: 10px 16px 16px;
+  overflow-x: auto;
+}
+
+.category-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.category-item {
+  text-align: center;
+  min-width: 80px;
+  cursor: pointer;
+}
+
+.category-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: 3px solid #f5c400; /* yellow */
+}
+
+.category-item p {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+/* ===== SAFE AREA ===== */
+.safe {
+  height: 60px;
+}
