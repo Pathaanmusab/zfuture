@@ -1,55 +1,59 @@
-/* DATA */
-let sliders = JSON.parse(localStorage.getItem("sliders")) || [];
-let categories = JSON.parse(localStorage.getItem("categories")) || [];
-let products = JSON.parse(localStorage.getItem("products")) || [];
+// SLIDER DATA
+const sliders = [
+  { type:"img", url:"https://via.placeholder.com/800x300" },
+  { type:"img", url:"https://via.placeholder.com/800x300/000/fff" }
+];
 
-/* SLIDER */
+// CATEGORY DATA
+const categories = ["All","Cables","Chargers","Headphones"];
+
+// PRODUCT DATA
+const products = [
+  {
+    id:1,
+    name:"Fast Charger",
+    price:999,
+    offer:20,
+    image:"https://via.placeholder.com/300",
+    category:"Chargers"
+  },
+  {
+    id:2,
+    name:"USB Cable",
+    price:399,
+    offer:10,
+    image:"https://via.placeholder.com/300",
+    category:"Cables"
+  }
+];
+
+// SLIDER RENDER
 const sliderBox = document.getElementById("sliderBox");
-if(sliderBox){
-  sliders.forEach(s=>{
-    sliderBox.innerHTML += `
-      <div class="slide">
-        <img src="${s.image}">
-        <button onclick="location.href='${s.link}'">${s.text}</button>
-      </div>`;
-  });
-}
+sliders.forEach(s=>{
+  if(s.type==="img"){
+    sliderBox.innerHTML += `<img src="${s.url}">`;
+  }
+});
 
-/* CATEGORIES */
+// CATEGORY RENDER
 const catBox = document.getElementById("categoryBox");
-if(catBox){
-  categories.forEach(c=>{
-    catBox.innerHTML += `
-      <div class="category" onclick="openCat('${c}')">
-        <div class="circle">${c}</div>
-        <p>${c}</p>
-      </div>`;
-  });
-}
+categories.forEach(c=>{
+  catBox.innerHTML += `<div class="cat">${c}</div>`;
+});
 
-function openCat(cat){
-  location.href="product.html?cat="+cat;
-}
-
-/* PRODUCTS */
+// PRODUCT RENDER
 const productBox = document.getElementById("productBox");
-const params = new URLSearchParams(window.location.search);
-const cat = params.get("cat");
-
-if(productBox){
-  let list = cat ? products.filter(p=>p.category==cat) : products;
-  if(document.getElementById("catTitle")) document.getElementById("catTitle").innerText = cat;
-
-  list.forEach(p=>{
-    let final = p.price - (p.price*p.offer/100);
-    productBox.innerHTML += `
-      <div class="card">
-        <img src="${p.image}">
-        <h4>${p.name}</h4>
-        <div class="price">
-          ₹${final}
-          ${p.offer>0 ? `<span class="old">₹${p.price}</span>`:""}
-        </div>
-      </div>`;
-  });
-}
+products.forEach(p=>{
+  const offerPrice = Math.round(p.price - (p.price*p.offer/100));
+  productBox.innerHTML += `
+    <div class="product">
+      <div class="badge">${p.offer}% OFF</div>
+      <img src="${p.image}">
+      <h4>${p.name}</h4>
+      <div class="price">
+        <span class="old">₹${p.price}</span>
+        <span class="new"> ₹${offerPrice}</span>
+      </div>
+    </div>
+  `;
+});
