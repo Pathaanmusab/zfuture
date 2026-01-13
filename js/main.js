@@ -1,90 +1,53 @@
-/* =======================
-   ZFUTURE – MAIN JS
-======================= */
+let products = JSON.parse(localStorage.getItem("products")||"[]");
+let categories = JSON.parse(localStorage.getItem("categories")||"[]");
+let slides = JSON.parse(localStorage.getItem("homeSlides")||"[]");
 
-/* ---------- SLIDER ---------- */
-let slides = JSON.parse(localStorage.getItem("homeSlides")) || [];
+/* CATEGORIES */
+const catBox = document.getElementById("categoryWrapper");
+categories.forEach(c=>{
+  catBox.innerHTML += `
+    <div class="category-item" onclick="filterCat('${c}')">
+      <div class="category-circle">${c}</div>
+      <p>${c}</p>
+    </div>
+  `;
+});
+
+/* SLIDER */
 const sliderBox = document.getElementById("sliderBox");
-let slideIndex = 0;
+slides.forEach(s=>{
+  sliderBox.innerHTML += `
+    <div class="slide">
+      <h3>${s.title||""}</h3>
+      <p>${s.text||""}</p>
+    </div>
+  `;
+});
 
-function renderSlider(){
-  if(!sliderBox) return;
-
-  sliderBox.innerHTML = "";
-
-  slides.forEach((s,i)=>{
-    sliderBox.innerHTML += `
-      <div class="slide ${i===0?'active':''}">
-        ${
-          s.type==="video"
-          ? `<video src="${s.src}" autoplay muted loop></video>`
-          : `<img src="${s.src}">`
-        }
-        <div class="slide-text">
-          <h3>${s.title||""}</h3>
-          <p>${s.text||""}</p>
-          ${
-            s.btn
-            ? `<button onclick="go('${s.link||'#'}')">${s.btn}</button>`
-            : ""
-          }
-        </div>
-      </div>
-    `;
-  });
-}
-
-function nextSlide(){
-  let all = document.querySelectorAll(".slide");
-  if(all.length===0) return;
-  all.forEach(s=>s.classList.remove("active"));
-  slideIndex = (slideIndex+1) % all.length;
-  all[slideIndex].classList.add("active");
-}
-
-setInterval(nextSlide,4000);
-
-function go(link){
-  window.location.href = link;
-}
-
-renderSlider();
-
-/* ---------- PRODUCTS ---------- */
-let products = JSON.parse(localStorage.getItem("products")) || [];
+/* PRODUCTS */
 const productBox = document.getElementById("productBox");
 
-function loadProducts(){
-  if(!productBox) return;
-
-  const url = new URLSearchParams(window.location.search);
-  const cat = url.get("category");
-
-  productBox.innerHTML = "";
-
-  let filtered = cat
-    ? products.filter(p=>p.category===cat)
-    : products;
-
-  filtered.forEach(p=>{
+function showProducts(list){
+  productBox.innerHTML="";
+  list.forEach(p=>{
     productBox.innerHTML += `
-      <div class="product-card" onclick="openProduct('${p.name}')">
+      <div class="product" onclick="openProduct('${p.name}')">
         <img src="${p.img}">
-        <h4>${p.name}</h4>
-
-        <div class="price">
-          ₹${p.finalPrice}
-          <span>₹${p.price}</span>
-        </div>
-
-        <div class="off">${p.offer}% OFF</div>
+        <p>${p.name}</p>
+        <div class="old-price">₹${p.price}</div>
+        <div class="new-price">₹${p.finalPrice}</div>
+        <div class="offer">${p.offer}% OFF</div>
       </div>
     `;
   });
+}
+showProducts(products);
+
+function filterCat(cat){
+  showProducts(products.filter(p=>p.category===cat));
 }
 
 function openProduct(name){
-  window.location.href = "product.html?product="+encodeURIComponent(name);
+  localStorage.setItem("viewProduct",name);
+  window.location.href="product.html";
 }
-
-loadProducts();
