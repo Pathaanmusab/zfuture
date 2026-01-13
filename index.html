@@ -1,1 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zfuture</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
 
+<!-- HEADER -->
+<div class="header">
+  <div class="logo">Z<span>future</span></div>
+  <div class="header-icons">
+    🔍 ☰
+  </div>
+</div>
+
+<!-- CATEGORY -->
+<div class="section-title">CATEGORIES</div>
+
+<div class="category-wrapper" id="categoryWrapper">
+  <!-- categories auto load here -->
+</div>
+
+<div class="safe"></div>
+
+<script>
+/* LOAD CATEGORIES FROM ADMIN */
+let categories = JSON.parse(localStorage.getItem("categories")) || [];
+const box = document.getElementById("categoryWrapper");
+
+if(categories.length === 0){
+  box.innerHTML = "<p style='padding:10px'>No category added</p>";
+}
+
+categories.forEach(cat => {
+  box.innerHTML += `
+    <div class="category-item" onclick="openCategory('${cat}')">
+      <div class="category-circle">${cat}</div>
+      <p>${cat}</p>
+    </div>
+  `;
+});
+
+function openCategory(cat){
+  window.location.href = "product.html?category=" + encodeURIComponent(cat);
+}
+</script>
+
+</body>
+</html>
