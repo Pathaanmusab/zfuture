@@ -1,1 +1,57 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Admin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h2>ADMIN PANEL</h2>
+
+<input id="cat" placeholder="New Category">
+<button onclick="addCat()">Add Category</button>
+
+<hr>
+
+<input id="name" placeholder="Product name">
+<input id="price" placeholder="Price">
+<input id="offer" placeholder="Offer %">
+<select id="pcat"></select>
+<input type="file" id="img">
+<button onclick="addProduct()">Save Product</button>
+
+<script>
+let categories = JSON.parse(localStorage.getItem("categories")||"[]");
+let products = JSON.parse(localStorage.getItem("products")||"[]");
+
+function addCat(){
+  categories.push(cat.value);
+  localStorage.setItem("categories",JSON.stringify(categories));
+  location.reload();
+}
+
+categories.forEach(c=>pcat.innerHTML+=`<option>${c}</option>`);
+
+function addProduct(){
+  let r=new FileReader();
+  r.onload=e=>{
+    let p={
+      name:name.value,
+      price:Number(price.value),
+      offer:Number(offer.value),
+      finalPrice:price.value-(price.value*offer.value/100),
+      category:pcat.value,
+      img:e.target.result
+    };
+    products.push(p);
+    localStorage.setItem("products",JSON.stringify(products));
+    alert("Saved");
+  };
+  r.readAsDataURL(img.files[0]);
+}
+</script>
+
+</body>
+</html>
