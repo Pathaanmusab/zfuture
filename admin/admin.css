@@ -1,1 +1,40 @@
 
+body{
+  font-family: Arial, sans-serif;
+  padding:20px;
+  background:#f7f7f7;
+}
+
+h1{
+  margin-bottom:20px;
+}
+
+section{
+  background:#fff;
+  padding:15px;
+  border-radius:8px;
+  margin-bottom:20px;
+}
+
+input, select, button{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+}
+
+button{
+  background:black;
+  color:white;
+  border:none;
+  cursor:pointer;
+}
+
+ul{
+  margin-top:10px;
+}
+
+li{
+  background:#eee;
+  padding:6px;
+  margin-bottom:4px;
+}
