@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin</title>
+<meta charset="UTF-8">
+<title>Zfuture Admin</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<h2>Slider</h2>
-<input id="sImg" placeholder="Image URL">
+<h2>🎞 Slider</h2>
+<input id="sMedia" placeholder="Image / Video URL">
 <input id="sText" placeholder="Button Text">
 <input id="sLink" placeholder="Button Link">
 <button onclick="addSlider()">Add Slider</button>
+<div id="sliderList"></div>
 
-<h2>Category</h2>
+<hr>
+
+<h2>⭕ Category</h2>
 <input id="catName" placeholder="Category Name">
-<button onclick="addCategory()">Add</button>
+<button onclick="addCategory()">Add Category</button>
+<div id="catList"></div>
 
-<h2>Product</h2>
+<hr>
+
+<h2>📦 Product</h2>
 <input id="pName" placeholder="Product Name">
-<input id="pPrice" placeholder="Price">
+<input id="pPrice" placeholder="Original Price">
 <input id="pOffer" placeholder="Offer %">
 <select id="pCat"></select>
-<input id="pImg" placeholder="Image URL">
-<button onclick="addProduct()">Save</button>
+<input id="pImg" placeholder="Product Image URL">
+
+<select id="pReturn">
+  <option value="yes">Return Available</option>
+  <option value="no">No Return</option>
+</select>
+
+<input id="pWarranty" placeholder="Warranty (months)">
+
+<button onclick="addProduct()">Add Product</button>
+<div id="productList"></div>
 
 <script src="admin.js"></script>
 </body>
