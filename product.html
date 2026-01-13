@@ -1,1 +1,32 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Product</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+
+<div class="section" id="detail"></div>
+
+<script>
+let products = JSON.parse(localStorage.getItem("products")||"[]");
+let name = localStorage.getItem("viewProduct");
+let p = products.find(x=>x.name===name);
+
+detail.innerHTML = `
+<img src="${p.img}" style="width:100%;border-radius:12px">
+<h2>${p.name}</h2>
+<p>${p.desc||""}</p>
+<div class="old-price">₹${p.price}</div>
+<div class="new-price">₹${p.finalPrice}</div>
+<p>Return: ${p.return}</p>
+<p>Warranty: ${p.warranty}</p>
+<button style="padding:12px;width:100%">Add to Cart</button>
+`;
+</script>
+
+</body>
+</html>
