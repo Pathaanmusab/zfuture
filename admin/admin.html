@@ -1,57 +1,39 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zfuture Admin</title>
+<link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<h2>ADMIN PANEL</h2>
+<h1>Zfuture – Admin Panel</h1>
 
-<input id="cat" placeholder="New Category">
-<button onclick="addCat()">Add Category</button>
+<!-- CATEGORY -->
+<section>
+  <h2>Add Category</h2>
+  <input type="text" id="catName" placeholder="Category name">
+  <button onclick="addCategory()">Add Category</button>
+  <ul id="catList"></ul>
+</section>
 
 <hr>
 
-<input id="name" placeholder="Product name">
-<input id="price" placeholder="Price">
-<input id="offer" placeholder="Offer %">
-<select id="pcat"></select>
-<input type="file" id="img">
-<button onclick="addProduct()">Save Product</button>
+<!-- PRODUCT -->
+<section>
+  <h2>Add Product</h2>
 
-<script>
-let categories = JSON.parse(localStorage.getItem("categories")||"[]");
-let products = JSON.parse(localStorage.getItem("products")||"[]");
+  <input type="text" id="pName" placeholder="Product name">
+  <input type="number" id="pPrice" placeholder="Price ₹">
+  <input type="number" id="pOffer" placeholder="Offer %">
+  
+  <select id="pCategory"></select>
 
-function addCat(){
-  categories.push(cat.value);
-  localStorage.setItem("categories",JSON.stringify(categories));
-  location.reload();
-}
+  <input type="text" id="pImage" placeholder="Image URL">
 
-categories.forEach(c=>pcat.innerHTML+=`<option>${c}</option>`);
+  <button onclick="addProduct()">Save Product</button>
+</section>
 
-function addProduct(){
-  let r=new FileReader();
-  r.onload=e=>{
-    let p={
-      name:name.value,
-      price:Number(price.value),
-      offer:Number(offer.value),
-      finalPrice:price.value-(price.value*offer.value/100),
-      category:pcat.value,
-      img:e.target.result
-    };
-    products.push(p);
-    localStorage.setItem("products",JSON.stringify(products));
-    alert("Saved");
-  };
-  r.readAsDataURL(img.files[0]);
-}
-</script>
-
+<script src="admin.js"></script>
 </body>
 </html>
