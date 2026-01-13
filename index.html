@@ -1,53 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Zfuture | Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- MAIN CSS -->
-  <link rel="stylesheet" href="css/theme.css">
+<meta charset="UTF-8">
+<title>Zfuture</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/theme.css">
 </head>
 
 <body>
 
-<!-- ================= HEADER ================= -->
-<header style="padding:14px;font-size:22px;font-weight:bold;">
-  Zfuture
+<header class="topbar">
+  <h1>Zfuture</h1>
 </header>
 
-<!-- ================= CATEGORIES ================= -->
-<h3 style="padding:0 16px;">Categories</h3>
-<div class="category-wrapper" id="categoryWrapper"></div>
+<!-- CATEGORIES -->
+<section class="section">
+  <h2>Categories</h2>
+  <div class="category-wrapper" id="categoryWrapper"></div>
+</section>
 
-<!-- ================= SLIDER ================= -->
-<div class="slider" id="sliderBox"></div>
+<!-- SLIDER -->
+<section class="slider" id="sliderBox"></section>
 
-<!-- ================= PRODUCTS ================= -->
-<h3 style="padding:0 16px;">Sale Is Live</h3>
-<div class="products" id="productBox"></div>
-
-<!-- ================= JS ================= -->
-<script>
-/* LOAD CATEGORIES */
-let categories = JSON.parse(localStorage.getItem("categories")) || [];
-const catBox = document.getElementById("categoryWrapper");
-
-categories.forEach(cat=>{
-  catBox.innerHTML += `
-    <div class="category-item" onclick="openCat('${cat}')">
-      <div class="category-circle">${cat}</div>
-      <p>${cat}</p>
-    </div>
-  `;
-});
-
-function openCat(cat){
-  window.location.href = "index.html?category="+encodeURIComponent(cat);
-}
-</script>
+<!-- PRODUCTS -->
+<section class="section">
+  <h2>Sale Is Live</h2>
+  <div class="products" id="productBox"></div>
+</section>
 
 <script src="js/main.js"></script>
-
 </body>
 </html>
