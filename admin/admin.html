@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Admin Panel</title>
 <link rel="stylesheet" href="admin.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-<h2>ADMIN PANEL</h2>
+<h2>Admin Panel</h2>
 
-<!-- CATEGORY -->
-<div class="box">
-<h3>Add Category</h3>
-<input id="catName" placeholder="Category name">
-<button onclick="addCategory()">Add</button>
-<div id="catList"></div>
-</div>
+<input id="name" placeholder="Product Name">
+<input id="price" placeholder="Original Price">
+<input id="offer" placeholder="Offer %">
+<input id="category" placeholder="Category">
+<textarea id="desc" placeholder="Description"></textarea>
 
-<!-- PRODUCT -->
-<div class="box">
-<h3>Add Product</h3>
+<input id="img1" placeholder="Image URL 1">
+<input id="img2" placeholder="Image URL 2">
+<input id="img3" placeholder="Image URL 3">
 
-<input id="pName" placeholder="Product name">
-<input id="pPrice" placeholder="Original Price">
-<input id="pOffer" placeholder="Offer %">
-<input id="pCategory" placeholder="Category">
+<select id="return">
+  <option value="no">No Return</option>
+  <option value="yes">Return</option>
+</select>
+<input id="returnDays" placeholder="Return Days">
 
-<textarea id="pDesc" placeholder="Description"></textarea>
-<input id="pWarranty" placeholder="Warranty">
-<input id="pReturn" placeholder="Return Policy">
+<select id="warranty">
+  <option value="no">No Warranty</option>
+  <option value="yes">Warranty</option>
+</select>
+<input id="warrantyTime" placeholder="Warranty Time">
 
-<textarea id="pImages" placeholder="Image / Video URLs (comma separated)"></textarea>
+<button onclick="addProduct()">ADD PRODUCT</button>
 
-<button onclick="addProduct()">Save Product</button>
-</div>
-
+<hr>
 <h3>All Products</h3>
-<div id="productList"></div>
+<div id="list"></div>
 
 <script src="admin.js"></script>
 </body>
