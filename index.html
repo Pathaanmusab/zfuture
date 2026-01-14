@@ -2,31 +2,37 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zfuture</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="css/theme.css">
 </head>
+
 <body>
 
-<!-- HEADER -->
+<!-- ===== HEADER ===== -->
 <header class="top">
   <div class="menu" onclick="toggleCat()">☰</div>
   <div class="logo">Zfuture</div>
 </header>
 
-<!-- CATEGORY DROPDOWN -->
+<!-- ===== CATEGORY MENU ===== -->
 <div id="catMenu" class="cat-menu"></div>
 
-<!-- SLIDER -->
+<!-- ===== SLIDER ===== -->
 <div class="slider" id="slider"></div>
 
-<!-- CATEGORY CIRCLES -->
-<h3 class="title">Categories</h3>
-<div class="cat-row" id="categoryRow"></div>
+<!-- ===== TRENDING ===== -->
+<h3 class="section-title">Trending Products</h3>
+<div class="products" id="trending"></div>
 
-<!-- PRODUCTS -->
-<h3 class="title">Trending</h3>
-<div class="products" id="productBox"></div>
+<!-- ===== ALL PRODUCTS ===== -->
+<div class="all-header">
+  <h3>All Products</h3>
+  <button onclick="showAll()">View All</button>
+</div>
+
+<div class="products" id="allProducts"></div>
 
 <script src="js/main.js"></script>
 </body>
