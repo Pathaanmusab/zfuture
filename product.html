@@ -1,15 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Products</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product | Zfuture</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
 
-<h2 id="catTitle"></h2>
-<div class="products" id="productBox"></div>
+<header class="header">
+  <a href="index.html">⬅ Back</a>
+  <h1>Zfuture</h1>
+</header>
+
+<!-- PRODUCT MEDIA -->
+<div class="product-view">
+  <img id="mainImg" src="" />
+</div>
+
+<div class="thumbs" id="thumbBox"></div>
+
+<!-- PRODUCT DETAILS -->
+<div class="details">
+  <h2 id="pName"></h2>
+
+  <div class="price">
+    <span class="old" id="oldPrice"></span>
+    <span class="new" id="newPrice"></span>
+  </div>
+
+  <p id="pDesc"></p>
+
+  <div class="extra">
+    <p><b>Warranty:</b> <span id="pWarranty"></span></p>
+    <p><b>Return:</b> <span id="pReturn"></span></p>
+  </div>
+</div>
 
 <script src="js/main.js"></script>
 </body>
