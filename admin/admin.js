@@ -1,82 +1,83 @@
-let categories = JSON.parse(localStorage.getItem("categories")) || [];
-let products = JSON.parse(localStorage.getItem("products")) || [];
-
-const catList = document.getElementById("catList");
-const catSelect = document.getElementById("pCategory");
-const productList = document.getElementById("productList");
+let categories = JSON.parse(localStorage.getItem("categories")||"[]");
+let products = JSON.parse(localStorage.getItem("products")||"[]");
 
 function save(){
-  localStorage.setItem("categories", JSON.stringify(categories));
-  localStorage.setItem("products", JSON.stringify(products));
-}
-
-function renderCategories(){
-  catList.innerHTML = "";
-  catSelect.innerHTML = "";
-  categories.forEach((c,i)=>{
-    catList.innerHTML += `<li>${c} <button onclick="delCat(${i})">X</button></li>`;
-    catSelect.innerHTML += `<option value="${c}">${c}</option>`;
-  });
+  localStorage.setItem("categories",JSON.stringify(categories));
+  localStorage.setItem("products",JSON.stringify(products));
 }
 
 function addCategory(){
-  let name = document.getElementById("catName").value.trim();
-  if(!name) return;
-  categories.push(name);
-  document.getElementById("catName").value="";
-  save(); renderCategories();
+  let c = catName.value.trim();
+  if(!c) return;
+  categories.push(c);
+  save();
+  catName.value="";
+  showCats();
 }
 
-function delCat(i){
-  categories.splice(i,1);
-  save(); renderCategories();
+function showCats(){
+  catList.innerHTML="";
+  categories.forEach(c=>{
+    catList.innerHTML+=`<div>${c}</div>`;
+  });
 }
+showCats();
 
+/* PRODUCT */
 function addProduct(){
-  let price = +pPrice.value;
-  let offer = +pOffer.value || 0;
-  let finalPrice = price - (price*offer/100);
+  let price = Number(pPrice.value);
+  let offer = Number(pOffer.value)||0;
+  let final = price - (price*offer/100);
 
-  products.push({
+  let obj={
+    id:Date.now().toString(),
     name:pName.value,
-    price,
-    offer,
-    finalPrice,
+    price:price,
+    offer:offer,
+    finalPrice:Math.round(final),
     category:pCategory.value,
-    images:pImages.value.split(",").map(i=>i.trim()),
-    video:pVideo.value,
+    desc:pDesc.value,
     warranty:pWarranty.value,
     return:pReturn.value,
-    hide:pHide.checked
-  });
+    images:pImages.value.split(",")
+  };
 
-  document.querySelectorAll("input").forEach(i=>i.value="");
-  pHide.checked=false;
+  products.push(obj);
+  save();
+  showProducts();
 
-  save(); renderProducts();
+  pName.value="";
+  pPrice.value="";
+  pOffer.value="";
+  pCategory.value="";
+  pDesc.value="";
+  pWarranty.value="";
+  pReturn.value="";
+  pImages.value="";
 }
 
-function renderProducts(){
+function showProducts(){
   productList.innerHTML="";
-  products.forEach((p,i)=>{
-    productList.innerHTML += `
-      <div class="product">
-        <b>${p.name}</b> (${p.category})<br>
-        <span class="small">₹${p.finalPrice} (${p.offer}% off)</span><br>
-        <span class="small">Warranty: ${p.warranty}</span><br>
-        <span class="small">Return: ${p.return}</span><br>
-        <span class="small">Images: ${p.images.length}</span><br>
-        <span class="small">Hidden: ${p.hide}</span><br>
-        <button onclick="delProduct(${i})">Delete</button>
-      </div>
-    `;
+  products.forEach(p=>{
+    productList.innerHTML+=`
+    <div class="product">
+      <b>${p.name}</b>
+      <div class="small">${p.category}</div>
+      <div>₹${p.finalPrice}</div>
+      <button onclick="view('${p.id}')">View</button>
+      <button onclick="del('${p.id}')">Delete</button>
+    </div>`;
   });
 }
+showProducts();
 
-function delProduct(i){
-  products.splice(i,1);
-  save(); renderProducts();
+function del(id){
+  products = products.filter(p=>p.id!==id);
+  save();
+  showProducts();
 }
 
-renderCategories();
-renderProducts();
+function view(id){
+  localStorage.setItem("viewProduct",id);
+  window.open("../product.html","_blank");
+}
