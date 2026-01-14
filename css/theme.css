@@ -1,54 +1,110 @@
 body{
   margin:0;
   font-family:Arial;
-  background:#969686;
+  background:#fff;
 }
 
-header{
-  background:#000;
+/* HEADER */
+.top{
+  display:flex;
+  align-items:center;
+  background:#e53935;
   color:#fff;
   padding:10px;
-  display:flex;
-  justify-content:space-between;
+}
+.menu{
+  font-size:22px;
+  margin-right:15px;
+}
+.logo{
+  font-size:20px;
+  font-weight:bold;
 }
 
-.slider img, .slider video{
+/* CATEGORY MENU */
+.cat-menu{
+  display:none;
+  background:#fff;
+  position:absolute;
   width:100%;
-  height:250px;
-  object-fit:cover;
+  z-index:10;
+}
+.cat-menu div{
+  padding:10px;
+  border-bottom:1px solid #ddd;
 }
 
+/* SLIDER */
+.slider{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+  padding:10px;
+}
+.slide{
+  min-width:220px;
+  background:#fff;
+  border-radius:10px;
+}
+.slide img{
+  width:100%;
+  border-radius:10px;
+}
+
+/* TITLES */
+.title{
+  padding:10px;
+  font-size:18px;
+}
+
+/* CATEGORY CIRCLE */
+.cat-row{
+  display:flex;
+  overflow-x:auto;
+  padding:10px;
+  gap:15px;
+}
+.cat{
+  text-align:center;
+}
+.cat div{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:#ffca28;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+/* PRODUCTS */
 .products{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:15px;
-  padding:15px;
-}
-
-.card{
-  background:#fff;
-  border-radius:8px;
-  overflow:hidden;
-}
-
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-}
-
-.card .info{
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
   padding:10px;
 }
-
-.price del{
-  color:red;
+.product{
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
 }
-
-.badge{
-  position:absolute;
+.product img{
+  width:100%;
+}
+.old{
+  text-decoration:line-through;
+  color:#999;
+}
+.new{
+  color:#e53935;
+  font-weight:bold;
+}
+.off{
   background:red;
-  color:#fff;
-  padding:4px 6px;
+  color:white;
   font-size:12px;
+  padding:2px 6px;
+  position:absolute;
 }
