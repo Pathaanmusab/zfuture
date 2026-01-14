@@ -1,24 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Zfuture</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/theme.css">
+  <meta charset="UTF-8">
+  <title>Zfuture</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- THEME -->
+  <link rel="stylesheet" href="css/theme.css">
+
+  <style>
+    body{margin:0;font-family:Arial;background:#fff}
+
+    /* HEADER */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px;
+      background:#fff;
+      border-bottom:1px solid #eee;
+    }
+    .menu{font-size:22px;cursor:pointer}
+    .logo{font-weight:bold;font-size:18px}
+
+    /* CATEGORY BAR */
+    .categories{
+      display:flex;
+      overflow-x:auto;
+      padding:10px;
+      gap:12px;
+      background:#fff;
+    }
+    .cat{
+      text-align:center;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .cat-circle{
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      background:#f3f3f3;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:bold;
+      margin-bottom:5px;
+    }
+
+    /* SLIDER */
+    .slider{
+      display:flex;
+      overflow-x:auto;
+      gap:10px;
+      padding:10px;
+    }
+    .slide{
+      min-width:85%;
+      border-radius:10px;
+      overflow:hidden;
+    }
+    .slide img,.slide video{
+      width:100%;
+      display:block;
+    }
+
+    /* PRODUCTS */
+    .section{
+      padding:10px;
+    }
+    .section h3{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .products{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+    }
+    .product{
+      border:1px solid #eee;
+      border-radius:8px;
+      padding:8px;
+      position:relative;
+      cursor:pointer;
+    }
+    .product img{
+      width:100%;
+      height:140px;
+      object-fit:contain;
+    }
+    .offer{
+      position:absolute;
+      top:5px;
+      left:5px;
+      background:red;
+      color:#fff;
+      font-size:12px;
+      padding:2px 6px;
+      border-radius:4px;
+    }
+    .old{
+      text-decoration:line-through;
+      color:#777;
+      font-size:13px;
+    }
+    .price{
+      font-weight:bold;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-  <h1>Zfuture</h1>
-  <a href="admin/admin.html">Admin</a>
+  <div class="menu">☰</div>
+  <div class="logo">Zfuture</div>
 </header>
+
+<!-- CATEGORIES -->
+<div class="categories" id="categoryBox"></div>
 
 <!-- SLIDER -->
 <div class="slider" id="sliderBox"></div>
 
-<!-- PRODUCTS -->
-<div class="products" id="productBox"></div>
+<!-- TRENDING -->
+<div class="section">
+  <h3>
+    Trending
+    <span onclick="showAll()" style="font-size:14px;cursor:pointer">View all</span>
+  </h3>
+  <div class="products" id="productBox"></div>
+</div>
 
 <script src="js/main.js"></script>
 </body>
