@@ -1,59 +1,33 @@
-// SLIDER DATA
-const sliders = [
-  { type:"img", url:"https://via.placeholder.com/800x300" },
-  { type:"img", url:"https://via.placeholder.com/800x300/000/fff" }
-];
+// SINGLE PRODUCT DATA (Admin se future me aayega)
+const product = {
+  name:"Fast Charger 65W",
+  price:1999,
+  offer:25,
+  description:"Fast charging supported. Durable and safe.",
+  warranty:"6 Months",
+  return:"7 Days Return",
+  images:[
+    "https://via.placeholder.com/400",
+    "https://via.placeholder.com/400/000",
+    "https://via.placeholder.com/400/555"
+  ]
+};
 
-// CATEGORY DATA
-const categories = ["All","Cables","Chargers","Headphones"];
+// LOAD PRODUCT
+if(document.getElementById("pName")){
+  const offerPrice = Math.round(product.price - (product.price*product.offer/100));
 
-// PRODUCT DATA
-const products = [
-  {
-    id:1,
-    name:"Fast Charger",
-    price:999,
-    offer:20,
-    image:"https://via.placeholder.com/300",
-    category:"Chargers"
-  },
-  {
-    id:2,
-    name:"USB Cable",
-    price:399,
-    offer:10,
-    image:"https://via.placeholder.com/300",
-    category:"Cables"
-  }
-];
+  document.getElementById("pName").innerText = product.name;
+  document.getElementById("oldPrice").innerText = "₹"+product.price;
+  document.getElementById("newPrice").innerText = " ₹"+offerPrice;
+  document.getElementById("pDesc").innerText = product.description;
+  document.getElementById("pWarranty").innerText = product.warranty;
+  document.getElementById("pReturn").innerText = product.return;
 
-// SLIDER RENDER
-const sliderBox = document.getElementById("sliderBox");
-sliders.forEach(s=>{
-  if(s.type==="img"){
-    sliderBox.innerHTML += `<img src="${s.url}">`;
-  }
-});
+  document.getElementById("mainImg").src = product.images[0];
 
-// CATEGORY RENDER
-const catBox = document.getElementById("categoryBox");
-categories.forEach(c=>{
-  catBox.innerHTML += `<div class="cat">${c}</div>`;
-});
-
-// PRODUCT RENDER
-const productBox = document.getElementById("productBox");
-products.forEach(p=>{
-  const offerPrice = Math.round(p.price - (p.price*p.offer/100));
-  productBox.innerHTML += `
-    <div class="product">
-      <div class="badge">${p.offer}% OFF</div>
-      <img src="${p.image}">
-      <h4>${p.name}</h4>
-      <div class="price">
-        <span class="old">₹${p.price}</span>
-        <span class="new"> ₹${offerPrice}</span>
-      </div>
-    </div>
-  `;
-});
+  const thumbBox = document.getElementById("thumbBox");
+  product.images.forEach(img=>{
+    thumbBox.innerHTML += `<img src="${img}" onclick="document.getElementById('mainImg').src='${img}'">`;
+  });
+}
