@@ -1,48 +1,82 @@
+let categories = JSON.parse(localStorage.getItem("categories")) || [];
 let products = JSON.parse(localStorage.getItem("products")) || [];
-let slider = JSON.parse(localStorage.getItem("slider")) || [];
 
-function addSlider(){
-  slider.push({
-    url: surl.value,
-    type: stype.value
+const catList = document.getElementById("catList");
+const catSelect = document.getElementById("pCategory");
+const productList = document.getElementById("productList");
+
+function save(){
+  localStorage.setItem("categories", JSON.stringify(categories));
+  localStorage.setItem("products", JSON.stringify(products));
+}
+
+function renderCategories(){
+  catList.innerHTML = "";
+  catSelect.innerHTML = "";
+  categories.forEach((c,i)=>{
+    catList.innerHTML += `<li>${c} <button onclick="delCat(${i})">X</button></li>`;
+    catSelect.innerHTML += `<option value="${c}">${c}</option>`;
   });
-  localStorage.setItem("slider",JSON.stringify(slider));
-  alert("Slider Added");
+}
+
+function addCategory(){
+  let name = document.getElementById("catName").value.trim();
+  if(!name) return;
+  categories.push(name);
+  document.getElementById("catName").value="";
+  save(); renderCategories();
+}
+
+function delCat(i){
+  categories.splice(i,1);
+  save(); renderCategories();
 }
 
 function addProduct(){
+  let price = +pPrice.value;
+  let offer = +pOffer.value || 0;
+  let finalPrice = price - (price*offer/100);
+
   products.push({
-    name:name.value,
-    price:+price.value,
-    offer:+offer.value,
-    images:images.value.split(","),
-    category:category.value,
-    warranty:warranty.value,
-    return:returnp.value,
-    hide:false
+    name:pName.value,
+    price,
+    offer,
+    finalPrice,
+    category:pCategory.value,
+    images:pImages.value.split(",").map(i=>i.trim()),
+    video:pVideo.value,
+    warranty:pWarranty.value,
+    return:pReturn.value,
+    hide:pHide.checked
   });
-  localStorage.setItem("products",JSON.stringify(products));
-  location.reload();
+
+  document.querySelectorAll("input").forEach(i=>i.value="");
+  pHide.checked=false;
+
+  save(); renderProducts();
 }
 
-const list = document.getElementById("list");
-products.forEach((p,i)=>{
-  list.innerHTML += `
-  <div class="card">
-    <b>${p.name}</b><br>
-    <button onclick="del(${i})">Delete</button>
-    <button onclick="hide(${i})">${p.hide?'Show':'Hide'}</button>
-  </div>`;
-});
+function renderProducts(){
+  productList.innerHTML="";
+  products.forEach((p,i)=>{
+    productList.innerHTML += `
+      <div class="product">
+        <b>${p.name}</b> (${p.category})<br>
+        <span class="small">₹${p.finalPrice} (${p.offer}% off)</span><br>
+        <span class="small">Warranty: ${p.warranty}</span><br>
+        <span class="small">Return: ${p.return}</span><br>
+        <span class="small">Images: ${p.images.length}</span><br>
+        <span class="small">Hidden: ${p.hide}</span><br>
+        <button onclick="delProduct(${i})">Delete</button>
+      </div>
+    `;
+  });
+}
 
-function del(i){
+function delProduct(i){
   products.splice(i,1);
-  localStorage.setItem("products",JSON.stringify(products));
-  location.reload();
+  save(); renderProducts();
 }
 
-function hide(i){
-  products[i].hide = !products[i].hide;
-  localStorage.setItem("products",JSON.stringify(products));
-  location.reload();
-}
+renderCategories();
+renderProducts();
