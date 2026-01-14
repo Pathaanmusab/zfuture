@@ -3,163 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <title>Product Details</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" href="css/theme.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
-  background:#f5f5f5;
-  font-family:Arial, sans-serif;
   margin:0;
-}
-
-.product-page{
-  max-width:1100px;
-  margin:auto;
-  padding:15px;
+  font-family:Arial;
   background:#fff;
 }
 
-/* IMAGE GALLERY */
-.gallery{
+/* HEADER */
+.top{
+  background:#e53935;
+  color:#fff;
+  padding:12px;
+  font-size:18px;
+}
+
+/* IMAGE SLIDER */
+.img-box{
   display:flex;
+  overflow-x:auto;
   gap:10px;
+  padding:10px;
 }
-.thumbs{
-  width:80px;
+.img-box img{
+  width:85%;
+  border-radius:10px;
 }
-.thumbs img{
-  width:100%;
-  margin-bottom:8px;
-  cursor:pointer;
-  border:1px solid #ccc;
-}
-.main-img{
-  flex:1;
-}
-.main-img img{
-  width:100%;
+
+/* CONTENT */
+.box{padding:12px}
+.old{color:#999;text-decoration:line-through}
+.new{color:#e53935;font-size:20px;font-weight:bold}
+.off{
+  background:red;
+  color:white;
+  display:inline-block;
+  padding:3px 6px;
+  font-size:12px;
+  margin-left:8px;
 }
 
 /* INFO */
-.info h2{
-  margin:10px 0;
+.info{
+  margin-top:10px;
+  background:#f9f9f9;
+  padding:10px;
+  border-radius:8px;
 }
-.old{
-  text-decoration:line-through;
-  color:#888;
-}
-.price{
-  font-size:22px;
-  color:#e60000;
-  font-weight:bold;
-}
-.offer{
-  background:red;
-  color:#fff;
-  display:inline-block;
-  padding:4px 8px;
-  margin-bottom:10px;
-}
+.info p{margin:6px 0}
 
 /* BUTTONS */
-.buttons{
-  margin-top:15px;
-}
-.buttons button{
+.btns{
+  display:flex;
+  gap:10px;
   padding:12px;
-  width:48%;
-  border:none;
+  position:sticky;
+  bottom:0;
+  background:#fff;
+}
+.btn{
+  flex:1;
+  padding:12px;
   font-size:16px;
-  cursor:pointer;
+  border:none;
+  border-radius:8px;
 }
-.buy{
-  background:#ff9f00;
-}
-.cart{
-  background:#fb641b;
-  color:#fff;
-}
-
-/* EXTRA */
-.section{
-  margin-top:20px;
-}
-.section h3{
-  border-bottom:1px solid #ddd;
-  padding-bottom:5px;
-}
+.cart{background:#ffca28}
+.buy{background:#e53935;color:white}
 </style>
 </head>
 
 <body>
 
-<div class="product-page">
-  <div class="gallery">
-    <div class="thumbs" id="thumbs"></div>
-    <div class="main-img">
-      <img id="mainImg">
-    </div>
+<div class="top">Product Details</div>
+
+<!-- IMAGES -->
+<div class="img-box" id="imgBox"></div>
+
+<!-- DETAILS -->
+<div class="box">
+  <h2 id="pname"></h2>
+
+  <div>
+    <span class="old" id="op"></span>
+    <span class="new" id="fp"></span>
+    <span class="off" id="off"></span>
   </div>
+
+  <p id="desc"></p>
 
   <div class="info">
-    <div class="offer" id="offerBox"></div>
-    <h2 id="pName"></h2>
-    <div class="old" id="oldPrice"></div>
-    <div class="price" id="newPrice"></div>
-
-    <div class="buttons">
-      <button class="buy">Buy Now</button>
-      <button class="cart">Add to Cart</button>
-    </div>
-  </div>
-
-  <div class="section">
-    <h3>Description</h3>
-    <p id="desc"></p>
-  </div>
-
-  <div class="section">
-    <h3>Warranty</h3>
-    <p id="warranty"></p>
-  </div>
-
-  <div class="section">
-    <h3>Return Policy</h3>
-    <p id="return"></p>
+    <p><b>Return:</b> <span id="ret"></span></p>
+    <p><b>Warranty:</b> <span id="war"></span></p>
+    <p><b>Category:</b> <span id="cat"></span></p>
   </div>
 </div>
 
+<!-- BUTTONS -->
+<div class="btns">
+  <button class="btn cart" onclick="addCart()">Add to Cart</button>
+  <button class="btn buy" onclick="buyNow()">Buy Now</button>
+</div>
+
 <script>
-let products = JSON.parse(localStorage.getItem("products") || "[]");
+let products = JSON.parse(localStorage.getItem("products")||"[]");
 let id = localStorage.getItem("viewProduct");
-let p = products.find(x=>x.id===id);
+let p = products.find(x=>x.id==id);
 
 if(!p){
   document.body.innerHTML="Product not found";
-}
-
-document.getElementById("pName").innerText = p.name;
-document.getElementById("oldPrice").innerText = "₹"+p.price;
-document.getElementById("newPrice").innerText = "₹"+p.finalPrice;
-document.getElementById("desc").innerText = p.desc || "";
-document.getElementById("warranty").innerText = p.warranty || "No warranty info";
-document.getElementById("return").innerText = p.return || "No return info";
-
-if(p.offer){
-  document.getElementById("offerBox").innerText = p.offer+"% OFF";
 }else{
-  document.getElementById("offerBox").style.display="none";
+
+  // Images
+  p.images.forEach(img=>{
+    imgBox.innerHTML+=`<img src="${img}">`;
+  });
+
+  pname.innerText=p.name;
+  desc.innerText=p.desc;
+  op.innerText="₹"+p.price;
+  fp.innerText="₹"+p.finalPrice;
+  off.innerText=p.offer?p.offer+"% OFF":"";
+  cat.innerText=p.category;
+
+  ret.innerText = p.return=="yes"
+    ? "Return in "+p.returnDays+" days"
+    : "No Return";
+
+  war.innerText = p.warranty=="yes"
+    ? p.warrantyTime
+    : "No Warranty";
 }
 
-let thumbs = document.getElementById("thumbs");
-let mainImg = document.getElementById("mainImg");
-
-p.images.forEach((img,i)=>{
-  thumbs.innerHTML += `<img src="${img}" onclick="mainImg.src='${img}'">`;
-  if(i===0) mainImg.src = img;
-});
+function addCart(){
+  alert("Added to cart (demo)");
+}
+function buyNow(){
+  alert("Buy now (demo)");
+}
 </script>
 
 </body>
