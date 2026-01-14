@@ -1,48 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Zfuture Admin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="admin.css">
+<title>Admin Panel</title>
+<link rel="stylesheet" href="admin.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-<h1>Zfuture – Admin Panel</h1>
+<h2>ADMIN PANEL</h2>
 
-<section class="box">
-  <h2>Add Category</h2>
-  <input id="catName" placeholder="Category name">
-  <button onclick="addCategory()">Add Category</button>
-  <ul id="catList"></ul>
-</section>
+<!-- CATEGORY -->
+<div class="box">
+<h3>Add Category</h3>
+<input id="catName" placeholder="Category name">
+<button onclick="addCategory()">Add</button>
+<div id="catList"></div>
+</div>
 
-<section class="box">
-  <h2>Add Product</h2>
+<!-- PRODUCT -->
+<div class="box">
+<h3>Add Product</h3>
 
-  <input id="pName" placeholder="Product Name">
-  <input id="pPrice" type="number" placeholder="Price">
-  <input id="pOffer" type="number" placeholder="Offer %">
-  
-  <select id="pCategory"></select>
+<input id="pName" placeholder="Product name">
+<input id="pPrice" placeholder="Original Price">
+<input id="pOffer" placeholder="Offer %">
+<input id="pCategory" placeholder="Category">
 
-  <input id="pImages" placeholder="Image URLs (comma separated)">
-  <input id="pVideo" placeholder="Video URL (optional)">
+<textarea id="pDesc" placeholder="Description"></textarea>
+<input id="pWarranty" placeholder="Warranty">
+<input id="pReturn" placeholder="Return Policy">
 
-  <input id="pWarranty" placeholder="Warranty (eg: 6 months)">
-  <input id="pReturn" placeholder="Return Policy">
+<textarea id="pImages" placeholder="Image / Video URLs (comma separated)"></textarea>
 
-  <label>
-    <input type="checkbox" id="pHide"> Hide Product
-  </label>
+<button onclick="addProduct()">Save Product</button>
+</div>
 
-  <button onclick="addProduct()">Add Product</button>
-</section>
-
-<section class="box">
-  <h2>Products</h2>
-  <div id="productList"></div>
-</section>
+<h3>All Products</h3>
+<div id="productList"></div>
 
 <script src="admin.js"></script>
 </body>
