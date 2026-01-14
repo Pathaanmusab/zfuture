@@ -2,38 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zfuture</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="css/theme.css">
+<style>
+body{font-family:Arial;margin:0;background:#fff}
+header{padding:15px;font-size:28px;font-weight:bold}
+.section{padding:15px}
+.categories{display:flex;gap:15px;overflow-x:auto}
+.cat{
+  min-width:90px;
+  text-align:center;
+  cursor:pointer
+}
+.cat-circle{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:#000;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+.products{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px
+}
+.card{
+  border:1px solid #eee;
+  padding:10px
+}
+.card img{width:100%;border-radius:6px}
+.price{font-weight:bold}
+.old{text-decoration:line-through;color:#999;font-size:14px}
+.off{color:red;font-size:14px}
+</style>
 </head>
 
 <body>
 
-<!-- ===== HEADER ===== -->
-<header class="top">
-  <div class="menu" onclick="toggleCat()">☰</div>
-  <div class="logo">Zfuture</div>
-</header>
+<header>Zfuture</header>
 
-<!-- ===== CATEGORY MENU ===== -->
-<div id="catMenu" class="cat-menu"></div>
-
-<!-- ===== SLIDER ===== -->
-<div class="slider" id="slider"></div>
-
-<!-- ===== TRENDING ===== -->
-<h3 class="section-title">Trending Products</h3>
-<div class="products" id="trending"></div>
-
-<!-- ===== ALL PRODUCTS ===== -->
-<div class="all-header">
-  <h3>All Products</h3>
-  <button onclick="showAll()">View All</button>
+<div class="section">
+  <h2>Categories</h2>
+  <div class="categories" id="catBox"></div>
 </div>
 
-<div class="products" id="allProducts"></div>
+<div class="section">
+  <h2>Sale Is Live</h2>
+  <div class="products" id="productBox"></div>
+</div>
 
-<script src="js/main.js"></script>
+<script>
+let categories = JSON.parse(localStorage.getItem("categories")||"[]");
+let products = JSON.parse(localStorage.getItem("products")||"[]");
+
+let catBox=document.getElementById("catBox");
+let productBox=document.getElementById("productBox");
+
+/* CATEGORIES */
+categories.forEach(c=>{
+  catBox.innerHTML+=`
+    <div class="cat" onclick="openCat('${c}')">
+      <div class="cat-circle">${c}</div>
+      <div>${c}</div>
+    </div>`;
+});
+
+/* PRODUCTS */
+products.forEach(p=>{
+  productBox.innerHTML+=`
+    <div class="card" onclick="openProduct('${p.id}')">
+      <img src="${p.images[0]}">
+      <div>${p.name}</div>
+      <div class="price">₹${p.finalPrice}</div>
+      ${p.offer?`<div class="old">₹${p.price}</div><div class="off">${p.offer}% OFF</div>`:""}
+    </div>`;
+});
+
+function openProduct(id){
+  localStorage.setItem("viewProduct",id);
+  location.href="product.html";
+}
+function openCat(cat){
+  localStorage.setItem("viewCategory",cat);
+  location.href="product.html";
+}
+</script>
+
 </body>
 </html>
