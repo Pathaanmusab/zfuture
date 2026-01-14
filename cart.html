@@ -3,45 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Cart</title>
-<link rel="stylesheet" href="css/theme.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;padding:15px}
+.item{border-bottom:1px solid #ddd;padding:10px}
+.total{font-size:20px;font-weight:bold}
+button{padding:15px;width:100%;background:green;color:#fff;border:none}
+</style>
 </head>
+
 <body>
 
-<h2 style="padding:10px">My Cart</h2>
-<div id="cartBox" class="products"></div>
-
-<button onclick="checkout()" style="margin:10px;background:#d32f2f;color:#fff;border:none;padding:10px;width:90%">
-Checkout on WhatsApp
-</button>
+<h2>Your Cart</h2>
+<div id="box"></div>
+<div class="total" id="total"></div>
+<button onclick="checkout()">Order on WhatsApp</button>
 
 <script>
-let cart = JSON.parse(localStorage.getItem("cart")||"[]");
-let box=document.getElementById("cartBox");
-
-let total=0;
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+let box=document.getElementById("box");
+let sum=0;
 
 cart.forEach(p=>{
-  total+=p.finalPrice;
-  box.innerHTML+=`
-  <div class="product">
-    <img src="${p.images?.[0]}">
-    <p>${p.name}</p>
-    <b>₹${p.finalPrice}</b>
-  </div>`;
+ sum+=Number(p.finalPrice);
+ box.innerHTML+=`
+ <div class="item">
+  <div>${p.name}</div>
+  <div>₹${p.finalPrice}</div>
+ </div>`;
 });
 
-function checkout(){
-  let msg="Order Details:%0A";
-  cart.forEach(p=>{
-    msg+=`${p.name} - ₹${p.finalPrice}%0A`;
-  });
-  msg+=`Total: ₹${total}`;
+total.innerText="Total: ₹"+sum;
 
-  window.open(
-    "https://wa.me/919296466519?text="+msg,
-    "_blank"
-  );
+function checkout(){
+ let msg="Order:%0A";
+ cart.forEach(p=>{
+  msg+=`${p.name} - ₹${p.finalPrice}%0A`;
+ });
+ msg+="Total: ₹"+sum;
+ window.open("https://wa.me/919296466519?text="+msg);
 }
 </script>
+
 </body>
 </html>
