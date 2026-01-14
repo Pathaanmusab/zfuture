@@ -1,116 +1,59 @@
-/* =========================
-   LOAD DATA FROM ADMIN
-========================= */
-let products = JSON.parse(localStorage.getItem("products") || "[]");
-let categories = JSON.parse(localStorage.getItem("categories") || "[]");
-let slides = JSON.parse(localStorage.getItem("homeSlides") || "[]");
+let products = JSON.parse(localStorage.getItem("products")||"[]");
+let categories = JSON.parse(localStorage.getItem("categories")||"[]");
 
-/* =========================
-   CATEGORY LOAD (CIRCLES)
-========================= */
-const categoryBox = document.getElementById("categoryBox");
-
-function loadCategories(){
-  if(!categoryBox) return;
-  categoryBox.innerHTML = "";
-  categories.forEach(cat=>{
-    categoryBox.innerHTML += `
-      <div class="cat" onclick="openCategory('${cat}')">
-        <div class="cat-circle">${cat}</div>
-        <div>${cat}</div>
-      </div>
-    `;
-  });
-}
-
-function openCategory(cat){
-  localStorage.setItem("filterCategory", cat);
-  showAll();
-}
-
-/* =========================
-   SLIDER LOAD
-========================= */
-const sliderBox = document.getElementById("sliderBox");
-
-function loadSlider(){
-  if(!sliderBox) return;
-  sliderBox.innerHTML = "";
-
-  slides.forEach(s=>{
-    if(s.type === "video"){
-      sliderBox.innerHTML += `
-        <div class="slide">
-          <video src="${s.src}" autoplay muted loop></video>
-        </div>
-      `;
-    } else {
-      sliderBox.innerHTML += `
-        <div class="slide">
-          <img src="${s.src}">
-        </div>
-      `;
-    }
-  });
-}
-
-/* =========================
-   PRODUCT CARD
-========================= */
+const slider = document.getElementById("slider");
 const productBox = document.getElementById("productBox");
+const catRow = document.getElementById("categoryRow");
+const catMenu = document.getElementById("catMenu");
 
-function productCard(p){
-  return `
-    <div class="product" onclick="openProduct('${p.id}')">
-      ${p.offer ? `<div class="offer">${p.offer}% OFF</div>` : ""}
-      <img src="${p.images?.[0] || ''}">
-      <div>${p.name}</div>
+/* MENU */
+function toggleCat(){
+  catMenu.style.display = catMenu.style.display=="block"?"none":"block";
+}
+
+categories.forEach(c=>{
+  catMenu.innerHTML+=`<div onclick="filterCat('${c}')">${c}</div>`;
+  catRow.innerHTML+=`
+  <div class="cat" onclick="filterCat('${c}')">
+    <div>${c}</div>
+    <small>${c}</small>
+  </div>`;
+});
+
+/* SLIDER */
+products.slice(0,5).forEach(p=>{
+  if(p.images[0]){
+    slider.innerHTML+=`
+    <div class="slide">
+      <img src="${p.images[0]}">
+    </div>`;
+  }
+});
+
+/* PRODUCTS */
+function show(list){
+  productBox.innerHTML="";
+  list.forEach(p=>{
+    productBox.innerHTML+=`
+    <div class="product" onclick="openP('${p.id}')">
+      ${p.offer?`<div class="off">${p.offer}% OFF</div>`:""}
+      <img src="${p.images[0]}">
+      <p>${p.name}</p>
       <div class="old">₹${p.price}</div>
-      <div class="price">₹${p.finalPrice}</div>
-    </div>
-  `;
-}
-
-/* =========================
-   TRENDING PRODUCTS
-========================= */
-function loadTrending(){
-  if(!productBox) return;
-  productBox.innerHTML = "";
-
-  let list = [...products].slice(0,6);
-  list.forEach(p=>{
-    productBox.innerHTML += productCard(p);
+      <div class="new">₹${p.finalPrice}</div>
+    </div>`;
   });
 }
+show(products);
 
-/* =========================
-   VIEW ALL / FILTER
-========================= */
-function showAll(){
-  productBox.innerHTML = "";
-
-  let filter = localStorage.getItem("filterCategory");
-  let list = filter
-    ? products.filter(p=>p.category===filter)
-    : products;
-
-  list.forEach(p=>{
-    productBox.innerHTML += productCard(p);
-  });
+/* FILTER */
+function filterCat(c){
+  show(products.filter(p=>p.category==c));
+  catMenu.style.display="none";
 }
 
-/* =========================
-   PRODUCT OPEN
-========================= */
-function openProduct(id){
-  localStorage.setItem("viewProduct", id);
-  window.location.href = "product.html";
+/* PRODUCT PAGE */
+function openP(id){
+  localStorage.setItem("viewProduct",id);
+  window.location.href="product.html";
 }
-
-/* =========================
-   INIT
-========================= */
-loadCategories();
-loadSlider();
-loadTrending();
