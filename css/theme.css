@@ -5,33 +5,39 @@ body{
 }
 
 /* HEADER */
-.top{
-  display:flex;
-  align-items:center;
+.header{
   background:#e53935;
   color:#fff;
-  padding:10px;
-}
-.menu{
-  font-size:22px;
-  margin-right:15px;
-}
-.logo{
-  font-size:20px;
-  font-weight:bold;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-/* CATEGORY MENU */
-.cat-menu{
-  display:none;
-  background:#fff;
-  position:absolute;
-  width:100%;
-  z-index:10;
-}
-.cat-menu div{
+/* CATEGORY */
+.category-wrap{
+  display:flex;
+  overflow-x:auto;
+  gap:12px;
   padding:10px;
-  border-bottom:1px solid #ddd;
+}
+.category{
+  text-align:center;
+}
+.category-circle{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:#ffca28;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:12px;
+}
+.category p{
+  margin:4px 0 0;
+  font-size:12px;
 }
 
 /* SLIDER */
@@ -41,41 +47,9 @@ body{
   gap:10px;
   padding:10px;
 }
-.slide{
-  min-width:220px;
-  background:#fff;
+.slider img{
+  height:160px;
   border-radius:10px;
-}
-.slide img{
-  width:100%;
-  border-radius:10px;
-}
-
-/* TITLES */
-.title{
-  padding:10px;
-  font-size:18px;
-}
-
-/* CATEGORY CIRCLE */
-.cat-row{
-  display:flex;
-  overflow-x:auto;
-  padding:10px;
-  gap:15px;
-}
-.cat{
-  text-align:center;
-}
-.cat div{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:#ffca28;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
 }
 
 /* PRODUCTS */
@@ -86,25 +60,30 @@ body{
   padding:10px;
 }
 .product{
-  background:#fff;
+  border:1px solid #eee;
+  padding:8px;
   border-radius:10px;
-  padding:10px;
+  position:relative;
 }
 .product img{
   width:100%;
+  border-radius:8px;
+}
+.off-badge{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:red;
+  color:#fff;
+  font-size:12px;
+  padding:3px 6px;
 }
 .old{
-  text-decoration:line-through;
+  font-size:12px;
   color:#999;
+  text-decoration:line-through;
 }
 .new{
   color:#e53935;
   font-weight:bold;
-}
-.off{
-  background:red;
-  color:white;
-  font-size:12px;
-  padding:2px 6px;
-  position:absolute;
 }
