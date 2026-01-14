@@ -1,96 +1,73 @@
-let sliders = JSON.parse(localStorage.getItem("sliders")) || [];
 let categories = JSON.parse(localStorage.getItem("categories")) || [];
 let products = JSON.parse(localStorage.getItem("products")) || [];
 
-const sliderList = document.getElementById("sliderList");
 const catList = document.getElementById("catList");
+const pCategory = document.getElementById("pCategory");
 const productList = document.getElementById("productList");
-const catSelect = document.getElementById("pCat");
 
-/* ---------- CATEGORY ---------- */
-function loadCats(){
-  catSelect.innerHTML="";
-  catList.innerHTML="";
-  categories.forEach((c,i)=>{
-    catSelect.innerHTML+=`<option>${c}</option>`;
-    catList.innerHTML+=`
-      <div>
-        ${c}
-        <button onclick="delCat(${i})">Delete</button>
-      </div>`;
-  });
+function save(){
+  localStorage.setItem("categories", JSON.stringify(categories));
+  localStorage.setItem("products", JSON.stringify(products));
 }
+
+/* CATEGORY */
 function addCategory(){
-  let c=document.getElementById("catName").value.trim();
-  if(!c)return;
-  categories.push(c);
-  localStorage.setItem("categories",JSON.stringify(categories));
-  document.getElementById("catName").value="";
-  loadCats();
+  let name = catName.value.trim();
+  if(!name) return;
+  categories.push(name);
+  catName.value="";
+  save();
+  renderCategories();
 }
-function delCat(i){
-  categories.splice(i,1);
-  localStorage.setItem("categories",JSON.stringify(categories));
-  loadCats();
-}
-loadCats();
 
-/* ---------- SLIDER ---------- */
-function showSliders(){
-  sliderList.innerHTML="";
-  sliders.forEach((s,i)=>{
-    sliderList.innerHTML+=`
-      <div>
-        ${s.media}
-        <button onclick="delSlider(${i})">Delete</button>
-      </div>`;
+function renderCategories(){
+  catList.innerHTML="";
+  pCategory.innerHTML="";
+  categories.forEach((c,i)=>{
+    catList.innerHTML += `<li>${c}</li>`;
+    pCategory.innerHTML += `<option>${c}</option>`;
   });
 }
-function addSlider(){
-  sliders.push({
-    media:sMedia.value,
-    text:sText.value,
-    link:sLink.value
-  });
-  localStorage.setItem("sliders",JSON.stringify(sliders));
-  sMedia.value=sText.value=sLink.value="";
-  showSliders();
-}
-function delSlider(i){
-  sliders.splice(i,1);
-  localStorage.setItem("sliders",JSON.stringify(sliders));
-  showSliders();
-}
-showSliders();
 
-/* ---------- PRODUCT ---------- */
-function showProducts(){
-  productList.innerHTML="";
-  products.forEach((p,i)=>{
-    productList.innerHTML+=`
-      <div>
-        ${p.name} (${p.category})
-        <button onclick="delProduct(${i})">Delete</button>
-      </div>`;
-  });
-}
+/* PRODUCT */
 function addProduct(){
-  products.push({
-    name:pName.value,
-    price:pPrice.value,
-    offer:pOffer.value,
-    category:pCat.value,
-    image:pImg.value,
-    return:pReturn.value,
-    warranty:pWarranty.value
+  let p = {
+    id: Date.now(),
+    name: pName.value,
+    price: pPrice.value,
+    category: pCategory.value,
+    images: pImages.value.split(",").map(i=>i.trim()),
+    warranty: pWarranty.value,
+    return: pReturn.value
+  };
+  products.push(p);
+  save();
+  renderProducts();
+}
+
+function deleteProduct(id){
+  products = products.filter(p=>p.id!==id);
+  save();
+  renderProducts();
+}
+
+function renderProducts(){
+  productList.innerHTML="";
+  products.forEach(p=>{
+    productList.innerHTML += `
+      <div class="product">
+        <b>${p.name}</b> – ₹${p.price}
+        <small>Category: ${p.category}</small>
+        <small>Warranty: ${p.warranty}</small>
+        <small>Return: ${p.return}</small>
+        <small>Images: ${p.images.length}</small>
+        <div class="actions">
+          <button onclick="deleteProduct(${p.id})">Delete</button>
+        </div>
+      </div>
+    `;
   });
-  localStorage.setItem("products",JSON.stringify(products));
-  pName.value=pPrice.value=pOffer.value=pImg.value=pWarranty.value="";
-  showProducts();
 }
-function delProduct(i){
-  products.splice(i,1);
-  localStorage.setItem("products",JSON.stringify(products));
-  showProducts();
-}
-showProducts();
+
+renderCategories();
+renderProducts();
