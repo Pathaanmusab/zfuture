@@ -1,52 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Zfuture Admin Panel</title>
+<title>Admin Panel</title>
 <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<h1>Zfuture – Admin Panel</h1>
+<h2>Admin Panel</h2>
 
-<!-- CATEGORY -->
-<section>
-  <h2>Add Category</h2>
-  <input id="catName" placeholder="Category name">
-  <button onclick="addCategory()">Add Category</button>
-  <ul id="catList"></ul>
-</section>
-
-<hr>
-
-<!-- PRODUCT -->
-<section>
-  <h2>Add Product</h2>
-
-  <input id="pName" placeholder="Product name">
-  <input id="pPrice" type="number" placeholder="Price">
-  
-  <select id="pCategory"></select>
-
-  <textarea id="pImages" placeholder="Image URLs (comma separated)"></textarea>
-
-  <input id="pWarranty" placeholder="Warranty (eg: 6 months)">
-  
-  <select id="pReturn">
-    <option value="Yes">Return Available</option>
-    <option value="No">No Return</option>
-  </select>
-
-  <button onclick="addProduct()">Add Product</button>
-</section>
+<h3>Slider</h3>
+<input id="surl" placeholder="Image / Video URL">
+<select id="stype">
+<option value="image">Image</option>
+<option value="video">Video</option>
+</select>
+<button onclick="addSlider()">Add</button>
 
 <hr>
 
-<!-- PRODUCT LIST -->
-<section>
-  <h2>All Products</h2>
-  <div id="productList"></div>
-</section>
+<h3>Add Product</h3>
+<input id="name" placeholder="Name">
+<input id="price" placeholder="Price">
+<input id="offer" placeholder="Offer %">
+<input id="images" placeholder="Image URLs (comma separated)">
+<input id="category" placeholder="Category">
+<input id="warranty" placeholder="Warranty">
+<input id="returnp" placeholder="Return Policy">
+<button onclick="addProduct()">Save</button>
+
+<hr>
+<div id="list"></div>
 
 <script src="admin.js"></script>
 </body>
