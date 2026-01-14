@@ -1,43 +1,38 @@
+*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:Arial;
+  font-family:Arial, Helvetica, sans-serif;
   background:#fff;
 }
 
 /* HEADER */
-.header{
-  background:#e53935;
+.top{
+  background:#d32f2f;
   color:#fff;
   padding:12px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+}
+.menu{
+  font-size:22px;
+  margin-right:12px;
+  cursor:pointer;
+}
+.logo{
+  font-size:20px;
+  font-weight:bold;
 }
 
-/* CATEGORY */
-.category-wrap{
-  display:flex;
-  overflow-x:auto;
-  gap:12px;
+/* CATEGORY MENU */
+.cat-menu{
+  display:none;
+  background:#fff;
+  border-bottom:1px solid #ddd;
+}
+.cat-menu div{
   padding:10px;
-}
-.category{
-  text-align:center;
-}
-.category-circle{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:#ffca28;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
-  font-size:12px;
-}
-.category p{
-  margin:4px 0 0;
-  font-size:12px;
+  border-top:1px solid #eee;
+  cursor:pointer;
 }
 
 /* SLIDER */
@@ -47,9 +42,22 @@ body{
   gap:10px;
   padding:10px;
 }
-.slider img{
-  height:160px;
+.slider .card{
+  min-width:220px;
+  background:#fff;
   border-radius:10px;
+  padding:8px;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.slider img{
+  width:100%;
+  border-radius:8px;
+}
+
+/* SECTIONS */
+.section-title{
+  padding:10px;
+  margin:0;
 }
 
 /* PRODUCTS */
@@ -59,31 +67,49 @@ body{
   gap:10px;
   padding:10px;
 }
+
 .product{
-  border:1px solid #eee;
-  padding:8px;
+  background:#fff;
   border-radius:10px;
+  padding:8px;
   position:relative;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
 .product img{
   width:100%;
   border-radius:8px;
 }
-.off-badge{
+.offer-badge{
   position:absolute;
   top:8px;
   left:8px;
-  background:red;
+  background:#d32f2f;
   color:#fff;
   font-size:12px;
   padding:3px 6px;
+  border-radius:4px;
 }
-.old{
-  font-size:12px;
-  color:#999;
+.old-price{
   text-decoration:line-through;
+  font-size:13px;
+  color:#777;
 }
-.new{
-  color:#e53935;
+.new-price{
+  color:#2e7d32;
   font-weight:bold;
+}
+
+/* ALL HEADER */
+.all-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px;
+}
+.all-header button{
+  background:#d32f2f;
+  color:#fff;
+  border:none;
+  padding:6px 10px;
+  border-radius:4px;
 }
