@@ -1,35 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Admin Panel</title>
-<link rel="stylesheet" href="admin.css">
+  <meta charset="UTF-8">
+  <title>Zfuture Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-<h2>Admin Panel</h2>
+<h1>Zfuture – Admin Panel</h1>
 
-<h3>Slider</h3>
-<input id="surl" placeholder="Image / Video URL">
-<select id="stype">
-<option value="image">Image</option>
-<option value="video">Video</option>
-</select>
-<button onclick="addSlider()">Add</button>
+<section class="box">
+  <h2>Add Category</h2>
+  <input id="catName" placeholder="Category name">
+  <button onclick="addCategory()">Add Category</button>
+  <ul id="catList"></ul>
+</section>
 
-<hr>
+<section class="box">
+  <h2>Add Product</h2>
 
-<h3>Add Product</h3>
-<input id="name" placeholder="Name">
-<input id="price" placeholder="Price">
-<input id="offer" placeholder="Offer %">
-<input id="images" placeholder="Image URLs (comma separated)">
-<input id="category" placeholder="Category">
-<input id="warranty" placeholder="Warranty">
-<input id="returnp" placeholder="Return Policy">
-<button onclick="addProduct()">Save</button>
+  <input id="pName" placeholder="Product Name">
+  <input id="pPrice" type="number" placeholder="Price">
+  <input id="pOffer" type="number" placeholder="Offer %">
+  
+  <select id="pCategory"></select>
 
-<hr>
-<div id="list"></div>
+  <input id="pImages" placeholder="Image URLs (comma separated)">
+  <input id="pVideo" placeholder="Video URL (optional)">
+
+  <input id="pWarranty" placeholder="Warranty (eg: 6 months)">
+  <input id="pReturn" placeholder="Return Policy">
+
+  <label>
+    <input type="checkbox" id="pHide"> Hide Product
+  </label>
+
+  <button onclick="addProduct()">Add Product</button>
+</section>
+
+<section class="box">
+  <h2>Products</h2>
+  <div id="productList"></div>
+</section>
 
 <script src="admin.js"></script>
 </body>
