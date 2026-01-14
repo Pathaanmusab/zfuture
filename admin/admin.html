@@ -2,275 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zfuture Admin Panel</title>
-
-<style>
-body{font-family:Arial;background:#f2f2f2;padding:15px}
-input,select,textarea,button{
-  width:100%;padding:10px;margin-top:8px;font-size:15px
-}
-.hidden{display:none}
-.box{background:#fff;padding:12px;border-radius:8px;margin-top:15px}
-.cat-title{
-  background:#222;color:#fff;padding:8px;border-radius:6px;
-  cursor:pointer;margin-top:10px
-}
-.product{
-  border-bottom:1px solid #ddd;padding:8px 0
-}
-.row{display:flex;gap:8px}
-.row button{flex:1}
-small{color:#555}
-</style>
+<link rel="stylesheet" href="admin.css">
 </head>
-
 <body>
 
-<!-- LOGIN -->
-<div id="loginBox" class="box">
-  <h3>Admin Login</h3>
-  <input id="aid" placeholder="Admin ID">
-  <input id="apass" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-</div>
+<h1>Zfuture – Admin Panel</h1>
 
-<!-- PANEL -->
-<div id="panel" class="hidden">
+<!-- CATEGORY -->
+<section>
+  <h2>Add Category</h2>
+  <input id="catName" placeholder="Category name">
+  <button onclick="addCategory()">Add Category</button>
+  <ul id="catList"></ul>
+</section>
 
-<!-- ================= CATEGORY ================= -->
-<div class="box">
-<h3>Add Category</h3>
-<input id="cname" placeholder="Category name">
-<button onclick="addCategory()">Add Category</button>
-</div>
+<hr>
 
-<!-- ================= PRODUCT ================= -->
-<div class="box">
-<h3>Add / Edit Product</h3>
+<!-- PRODUCT -->
+<section>
+  <h2>Add Product</h2>
 
-<select id="pcat"></select>
+  <input id="pName" placeholder="Product name">
+  <input id="pPrice" type="number" placeholder="Price">
+  
+  <select id="pCategory"></select>
 
-<input id="pname" placeholder="Product Name">
-<textarea id="pdesc" placeholder="Description"></textarea>
+  <textarea id="pImages" placeholder="Image URLs (comma separated)"></textarea>
 
-<input id="pprice" type="number" placeholder="Original Price">
-<input id="poffer" type="number" placeholder="Offer %">
+  <input id="pWarranty" placeholder="Warranty (eg: 6 months)">
+  
+  <select id="pReturn">
+    <option value="Yes">Return Available</option>
+    <option value="No">No Return</option>
+  </select>
 
-<label>Product Images (multiple)</label>
-<input id="pimgs" type="file" multiple accept="image/*">
+  <button onclick="addProduct()">Add Product</button>
+</section>
 
-<label>Product Video (optional)</label>
-<input id="pvideo" type="file" accept="video/*">
+<hr>
 
-<select id="preturn">
-  <option value="yes">Return Available</option>
-  <option value="no">No Return</option>
-</select>
+<!-- PRODUCT LIST -->
+<section>
+  <h2>All Products</h2>
+  <div id="productList"></div>
+</section>
 
-<input id="pwarranty" placeholder="Warranty (eg: 12 Months)">
-
-<button onclick="saveProduct()">Save Product</button>
-</div>
-
-<!-- ================= PRODUCTS LIST ================= -->
-<div class="box">
-<h3>Products (Category wise)</h3>
-<div id="productList"></div>
-</div>
-
-<!-- ================= SLIDER ================= -->
-<div class="box">
-<h3>Home Slider (Max 6)</h3>
-
-<select id="sType">
-  <option value="image">Image</option>
-  <option value="video">Video</option>
-</select>
-
-<input type="file" id="sFile" accept="image/*,video/*">
-<input id="sTitle" placeholder="Title">
-<input id="sText" placeholder="Offer Text">
-<input id="sBtn" placeholder="Button Text">
-<input id="sLink" placeholder="Button Link">
-
-<button onclick="addSlide()">Add Slide</button>
-<div id="slideList"></div>
-</div>
-
-</div>
-
-<script>
-const ADMIN_ID="admin", ADMIN_PASS="1234";
-
-let categories = JSON.parse(localStorage.getItem("categories"))||[];
-let products = JSON.parse(localStorage.getItem("products"))||[];
-let slides = JSON.parse(localStorage.getItem("homeSlides"))||[];
-let editIndex = -1;
-
-/* LOGIN */
-function login(){
-  if(aid.value===ADMIN_ID && apass.value===ADMIN_PASS){
-    loginBox.style.display="none";
-    panel.classList.remove("hidden");
-    syncCategories();
-    renderProducts();
-    renderSlides();
-  } else alert("Wrong login");
-}
-
-/* CATEGORY */
-function addCategory(){
-  if(cname.value && !categories.includes(cname.value)){
-    categories.push(cname.value);
-    localStorage.setItem("categories",JSON.stringify(categories));
-    cname.value="";
-    syncCategories();
-  }
-}
-function syncCategories(){
-  pcat.innerHTML="";
-  categories.forEach(c=>pcat.innerHTML+=`<option>${c}</option>`);
-}
-
-/* PRODUCT SAVE */
-function saveProduct(){
-  let data={
-    name:pname.value,
-    desc:pdesc.value,
-    price:Number(pprice.value),
-    offer:Number(poffer.value)||0,
-    finalPrice:Math.round(pprice.value-(pprice.value*poffer.value/100)),
-    category:pcat.value,
-    return:preturn.value,
-    warranty:pwarranty.value,
-    images:[],
-    video:""
-  };
-
-  let imgFiles=[...pimgs.files];
-  let loaded=0;
-
-  if(imgFiles.length){
-    imgFiles.forEach(f=>{
-      let r=new FileReader();
-      r.onload=e=>{
-        data.images.push(e.target.result);
-        loaded++;
-        if(loaded===imgFiles.length) handleVideo(data);
-      };
-      r.readAsDataURL(f);
-    });
-  } else {
-    handleVideo(data);
-  }
-}
-
-function handleVideo(data){
-  if(pvideo.files[0]){
-    let vr=new FileReader();
-    vr.onload=e=>{
-      data.video=e.target.result;
-      finalize(data);
-    };
-    vr.readAsDataURL(pvideo.files[0]);
-  } else finalize(data);
-}
-
-function finalize(data){
-  if(editIndex>-1){
-    products[editIndex]=data;
-    editIndex=-1;
-  } else products.push(data);
-
-  localStorage.setItem("products",JSON.stringify(products));
-  renderProducts();
-  alert("Product Saved");
-}
-
-/* PRODUCT LIST */
-function renderProducts(){
-  productList.innerHTML="";
-  categories.forEach(cat=>{
-    let catBox=document.createElement("div");
-    catBox.innerHTML=`<div class="cat-title" onclick="this.nextElementSibling.classList.toggle('hidden')">${cat}</div><div class="hidden"></div>`;
-    let inner=catBox.querySelector("div.hidden");
-
-    products.filter(p=>p.category===cat).forEach((p,i)=>{
-      inner.innerHTML+=`
-        <div class="product">
-          <b>${p.name}</b> – ₹${p.finalPrice} (${p.offer}%)
-          <br><small>${p.images.length} images | ${p.video?"video":"no video"}</small>
-          <div class="row">
-            <button onclick="edit(${i})">Edit</button>
-            <button onclick="del(${i})">Delete</button>
-          </div>
-        </div>`;
-    });
-    productList.appendChild(catBox);
-  });
-}
-
-function edit(i){
-  let p=products[i];
-  pname.value=p.name;
-  pdesc.value=p.desc;
-  pprice.value=p.price;
-  poffer.value=p.offer;
-  pcat.value=p.category;
-  preturn.value=p.return;
-  pwarranty.value=p.warranty;
-  editIndex=i;
-}
-
-function del(i){
-  if(confirm("Delete product?")){
-    products.splice(i,1);
-    localStorage.setItem("products",JSON.stringify(products));
-    renderProducts();
-  }
-}
-
-/* SLIDER */
-function addSlide(){
-  if(slides.length>=6) return alert("Max 6 slides");
-
-  let f=sFile.files[0];
-  if(!f) return alert("Upload file");
-
-  let r=new FileReader();
-  r.onload=e=>{
-    slides.push({
-      type:sType.value,
-      src:e.target.result,
-      title:sTitle.value,
-      text:sText.value,
-      btn:sBtn.value,
-      link:sLink.value
-    });
-    localStorage.setItem("homeSlides",JSON.stringify(slides));
-    renderSlides();
-  };
-  r.readAsDataURL(f);
-}
-
-function renderSlides(){
-  slideList.innerHTML="";
-  slides.forEach((s,i)=>{
-    slideList.innerHTML+=`
-      <div class="product">
-        <b>${s.title||"Slide"}</b> (${s.type})
-        <div class="row">
-          <button onclick="slides.splice(${i},1);saveSlides()">Delete</button>
-        </div>
-      </div>`;
-  });
-}
-function saveSlides(){
-  localStorage.setItem("homeSlides",JSON.stringify(slides));
-  renderSlides();
-}
-</script>
-
+<script src="admin.js"></script>
 </body>
 </html>
