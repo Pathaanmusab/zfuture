@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Login | ZFuture</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#121212;
+  font-family:Arial, sans-serif;
+}
+.login-box{
+  background:#1f1f1f;
+  padding:25px;
+  width:100%;
+  max-width:360px;
+  border-radius:10px;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
+}
+.login-box h2{
+  color:#fff;
+  text-align:center;
+  margin-bottom:20px;
+}
+input{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:6px;
+  font-size:15px;
+}
+button{
+  width:100%;
+  padding:12px;
+  margin-top:18px;
+  border:none;
+  border-radius:6px;
+  background:#00c853;
+  color:#000;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{
+  background:#00e676;
+}
+.error{
+  color:#ff5252;
+  margin-top:10px;
+  text-align:center;
+  display:none;
+}
+small{
+  color:#aaa;
+  display:block;
+  text-align:center;
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+  <h2>Admin Login</h2>
+
+  <input type="text" id="adminId" placeholder="Admin ID">
+  <input type="password" id="adminPass" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+
+  <div class="error" id="err">Invalid ID or Password</div>
+
+  <small>ZFuture Admin Panel</small>
+</div>
+
+<script>
+const ADMIN_ID = "zfurure";
+const ADMIN_PASS = "229411";
+
+function login(){
+  let id = adminId.value.trim();
+  let pass = adminPass.value.trim();
+
+  if(id === ADMIN_ID && pass === ADMIN_PASS){
+    localStorage.setItem("adminLogged","yes");
+    window.location.href = "admin-panel.html";
+  }else{
+    err.style.display = "block";
+  }
+}
+</script>
+
+</body>
+</html>
