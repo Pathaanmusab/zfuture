@@ -109,6 +109,9 @@ hr{margin:20px 0}
 </div>
 
 <script>
+  if(localStorage.getItem("adminLogged")!=="yes"){
+  window.location.href="admin-login.html";
+}
 const ADMIN_ID="admin";
 const ADMIN_PASS="1234";
 
