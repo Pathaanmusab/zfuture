@@ -82,8 +82,8 @@ small{
 </div>
 
 <script>
-const ADMIN_ID = "zfurure";
-const ADMIN_PASS = "229411";
+const ADMIN_ID = "admin";
+const ADMIN_PASS = "1234";
 
 function login(){
   let id = adminId.value.trim();
@@ -91,7 +91,9 @@ function login(){
 
   if(id === ADMIN_ID && pass === ADMIN_PASS){
     localStorage.setItem("adminLogged","yes");
-    window.location.href = "admin-panel.html";
+
+    // ✅ CORRECT redirect (admin folder ke andar)
+    window.location.href = "admin.html";
   }else{
     err.style.display = "block";
   }
